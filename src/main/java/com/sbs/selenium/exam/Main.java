@@ -49,61 +49,19 @@ public class Main {
 		driver.switchTo().window(tabs.get(0));
 		
 		//원하는 사이트 주소 입력
-		driver.get("https://unsplash.com/");
+		driver.get("https://codeup.kr/problemsetsol.php?psid=23");
 		
-		
-		//imgDownloads라는 폴더가 없을 경우 생성
-		File downloadsFolder = new File("imgDownloads");
-		
-		if ( downloadsFolder.exists() == false ) {
-			downloadsFolder.mkdir();
-		}
 		
 		//원하는 엘리먼트들 가져오기
 		//엘리먼트들의 계보를 확인해서 css선택자 방식으로 원하는 엘리먼트 지정
-		List<WebElement> elements = driver.findElements(By.cssSelector("[data-test=\"masonry-grid-count-three\"] img"));
+		List<WebElement> elements = driver.findElements(By.cssSelector("[id=\"problemset\"] [class=\"left\"] a"));
 	
 		//로딩 시간 부여
 		//설정된 millis초 단위 만큼 쉬는 것
 		Util.sleep(1000);
 		
 		for(WebElement element : elements) {
-			String src = element.getAttribute("src"); 
-			 				//getAttribute = 원하는 속성을 가져오기
-							//getText = 글자를 가져온다 등
-			
-			//만약 images.unsplash.com/photo-라는 내용이 없으면 가져오기 X(즉, 이미지만 가져오기 위한 걸러내기)
-			if (src.contains("images.unsplash.com/photo-") == false) {
-				continue;
-			}
-			
-			//System.out.println(src);
-			
-			
-			
-			//이미지 엘리먼트 다운로드
-			BufferedImage saveImage = null;
-			
-			try {
-				saveImage = ImageIO.read(new URL(src));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			if(saveImage != null) {
-				try {
-			//이미지 주소 : https://images.unsplash.com/photo-1602524815375-a54449bb00fb?ixid=MXwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80
-			//"/"기준으로 1차 분할
-			//1차 분할 결과 중 "?"기준으로 2차 분할
-			//결과 : photo-1602524815375-a54449bb00fb
-					String fileName = src.split("/")[3];
-					fileName = fileName.split("\\?")[0];
-					ImageIO.write(saveImage, "jpg", new File("imgDownloads/"+ fileName + ".jpg"));
-					//write: 저장하다
-				} catch (IOException e) {
-					// TODO: handle exception
-				}
-			}
+			String src = element.getText(); 
 			
 			System.out.println(src);
 			
