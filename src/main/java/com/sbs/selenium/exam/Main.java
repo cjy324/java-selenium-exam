@@ -16,10 +16,70 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import com.sbs.selenium.exam.dto.Article;
+
 public class Main {
 
 	public static void main(String[] args) {
-		//운영체제 수준에서의 변수를 가져온다	
+		//getSomeArticleListTestModel();
+		underKgSiteArticleCrawling();
+	}
+	
+	
+	private static void underKgSiteArticleCrawling() {
+				Path path = Paths.get(System.getProperty("user.dir"), "src/main/resources/chromedriver.exe");
+
+				System.setProperty("webdriver.chrome.driver", path.toString());
+
+				ChromeOptions options = new ChromeOptions();
+				options.addArguments("--start-maximized");  
+				options.addArguments("disable-popup-blocking");  
+				options.addArguments("disable-defult-apps");  
+
+				ChromeDriver driver = new ChromeDriver(options);   
+				
+				//빈 탭 생성
+//				driver.executeScript("window.open('about:blank','_blank');");
+				
+				//열린 탭 리스트 가져오기
+//				List<String> tabs = new ArrayList<>(driver.getWindowHandles());
+
+				//첫번째 탭으로 전환
+//				driver.switchTo().window(tabs.get(0));
+				
+				//원하는 사이트 주소 입력
+				driver.get("http://underkg.co.kr/freeboard");
+
+				
+				
+				List<WebElement> elements = driver.findElements(By.cssSelector(".board_list tbody"));
+			
+				//로딩 시간 부여
+				Util.sleep(1000);
+				
+				System.out.println("번호 / 제목 / 글쓴이 / 날짜 / 조회수 / 추천수");
+				
+				for(WebElement element : elements) {
+					String no = element.findElement(By.cssSelector(".no")).getText();
+//					String title = element.findElement(By.cssSelector("tr:not(.notice) td.title > a:first-child")).getText().trim();
+//					String writer = element.findElement(By.cssSelector("tr:not(.notice) td.author  > a:first-child")).getText().trim();
+//					String dateTime = element.findElement(By.cssSelector("tr:not(.notice) .time")).getText().trim();
+//					int hit = Integer.parseInt(element.findElement(By.cssSelector("tr:not(.notice).readNum")).getText());
+//					int recommand = Integer.parseInt(element.findElement(By.cssSelector("tr:not(.notice) .voteNum")).getText());
+
+					System.out.println(no);
+//					System.out.println(title);
+//					Article article = new Article(no, title);
+						
+				}
+				
+		
+	}
+
+
+	private static void getSomeArticleListTestModel() {
+
+	//운영체제 수준에서의 변수를 가져온다	
 		Path path = Paths.get(System.getProperty("user.dir"), "src/main/resources/chromedriver.exe");
 	//System.getProperty("user.dir")
 	//시스템 변수
