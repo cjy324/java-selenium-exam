@@ -8,6 +8,16 @@ public class Article {
 	private String dateTime;
 	private int hit;
 	private int recommand;
+	
+	public Article(int no, String title, String writer, String dateTime, int hit, int recommand) {
+		this.no = no;
+		this.title = title;
+		this.writer = writer;
+		this.dateTime = dateTime;
+		this.hit = hit;
+		this.recommand = recommand;
+		
+	}
 	public int getNo() {
 		return no;
 	}
